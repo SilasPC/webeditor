@@ -13,12 +13,11 @@ to make doing small edits easier for the family, rather than editing html/css.
 # The How
 
 Assuming you have a simple static website, with areas you want to edit only containing predictable layout elements.
-
-	1. Extend `Editor` to fit your needs (see w3css based example).
-	This includes how to generate interface and how to save changes.
-	2. Define the layout elements in the config.
-	3. Include script on webpage.
-	4. Profit.
+1. Extend `Editor` to fit your needs (see w3css based example).
+This includes how to generate interface and how to save changes.
+2. Define the layout elements in the config.
+3. Include script on webpage.
+4. Profit.
 
 # The bugs
 
@@ -51,7 +50,7 @@ Specific to the example there are:
 
 # The Example
 
-`w3editor.js` and `editor_cfg.js` together provide an example based around [https://www.w3schools.com/w3css/default.asp]w3css.
+`w3editor.js` and `editor_cfg.js` together provide an example based around [https://www.w3schools.com/w3css/default.asp](w3css).
 
 "Saving" is performed by downloading the modified contents to a file, which can be pushed to the server later.
 Thus this does not provide seamless saving, but it should be fairly straightforward to integrate if need be.
@@ -61,6 +60,6 @@ Thus this does not provide seamless saving, but it should be fairly straightforw
 The code is a modified version of the pingpoli editor (Christian Behler), without which I could not have made this.
 The relevant licenses is included in the relevant files.
 
-Based on the [https://pingpoli.de/creating-a-rich-text-editor]post and [https://gist.github.com/pingpoli/f63eca5c7dc6955b25e4e79c342965e2]code by [https://github.com/pingpoli]pingpoli.
+Based on the [https://pingpoli.de/creating-a-rich-text-editor](post) and [https://gist.github.com/pingpoli/f63eca5c7dc6955b25e4e79c342965e2](code) by [https://github.com/pingpoli](pingpoli).
 
 
