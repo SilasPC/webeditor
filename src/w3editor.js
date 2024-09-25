@@ -40,11 +40,11 @@ class W3Editor extends Editor {
 				[contenteditable=false]:not([decorator]) {
 					border: 1px solid red;
 				}
-				[contenteditable] * {
+				[contenteditable=true] *:not(hr) {
 					min-height: 32px;
 					min-width: 32px;
 				}
-				[contenteditable] :empty {
+				[contenteditable=true] :empty:not(hr) {
 					border: 1px solid purple;
 				}
 				[decorator], [decorator] * {

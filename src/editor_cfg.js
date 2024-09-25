@@ -50,16 +50,53 @@ function btnsDecorator(...btns) {
 
 function uploadImg(filePath, img = document.createElement("IMG")) {
 	let reader = new FileReader()
+	if (!img) img = editor.insertNode("img")
+	if (!img) return
+	img.classList.add("w3-image")
 	reader.addEventListener(
 		"load", () => {
 			img.src = reader.result;
-			img.classList.add("w3-image")
-			editor.insertNode(img)
-			input.value = ""
 		},
 		false,
 	);
 	reader.readAsDataURL(filePath);
+}
+
+async function listAssets(dir = "/assets") {
+	let doc = await fetch(dir)
+		.then(response => response.text())
+		.then(str => new DOMParser().parseFromString(str, "text/html"))
+	let files = [...doc.querySelectorAll("ul a")]
+		.map(f => [f.href, f.title, f.classList.contains("icon-directory")])
+	return files
+}
+
+async function updateAssetSelector(select, img, dir = "/assets") {
+	select.onchange = () => {
+		let [href, _, dir] = fs[select.value]
+		if (dir) {
+			updateAssetSelector(select, img, href)
+		} else {
+			img.src = href
+		}
+	}
+	let fs = await listAssets(dir)
+	select.replaceChildren()
+	for (let [i, [_,name,__]] of Object.entries(fs)) {
+		let option = document.createElement("OPTION")
+		option.value = i
+		option.innerText = name
+		select.appendChild(option)
+	}
+}
+
+function assetSelector(el) {
+	let span = html`<span><select></select><input type="file"></input></span>`
+	let select = span.querySelector("select")
+	updateAssetSelector(select, el)
+	let input = span.querySelector("input")
+	input.onchange = () => uploadImg(input.files[0], el)
+	return span
 }
 
 function colorBtn(f, val) {
@@ -108,12 +145,7 @@ const cfg = {
 			button.onclick = () => removeNode(el)
 			return div
 		},
-		"img": (el) => {
-			let span = html`<span><input type="file"></input></span>`
-			let input = span.querySelector("input")
-			input.onchange = () => uploadImg(input.files[0], el)
-			return span
-		}
+		"img": assetSelector,
 	},
 	layout: {
 		"panel": {

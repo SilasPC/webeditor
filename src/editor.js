@@ -255,9 +255,7 @@ class Editor {
 		if (this.#inEditableRegion(event.target, false)) {
 			this.#setTargetElement(event.target)
 			if (this.onChangeTarget) this.onChangeTarget()
-		} else if (["BUTTON","INPUT"].includes(event.target.nodeName)) {
-
-		} else {
+		} else if (!this.#findMatchingParent(event.target, "[decorator]")) {
 			this.targetElement = null
 			this.#undecorate();
 			this.clean();
