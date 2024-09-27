@@ -66,8 +66,8 @@ async function listAssets(dir = "/assets") {
 	let doc = await fetch(dir)
 		.then(response => response.text())
 		.then(str => new DOMParser().parseFromString(str, "text/html"))
-	let files = [...doc.querySelectorAll("ul a")]
-		.map(f => [f.href, f.title, f.classList.contains("icon-directory")])
+	let files = [...doc.querySelectorAll("li a")]
+		.map(f => [dir + "/" + f.attributes.href.value, f.innerText, f.attributes.filetype.value == "dir"])
 	return files
 }
 
@@ -82,6 +82,7 @@ async function updateAssetSelector(select, img, dir = "/assets") {
 	}
 	let fs = await listAssets(dir)
 	select.replaceChildren()
+	select.appendChild(html`<option selected disabled>${dir}</option>`)
 	for (let [i, [_,name,__]] of Object.entries(fs)) {
 		let option = document.createElement("OPTION")
 		option.value = i
